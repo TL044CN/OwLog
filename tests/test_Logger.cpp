@@ -14,7 +14,7 @@ SCENARIO("Logging messages to a stream sink") {
             Logger logger(sink);
 
             WHEN("Logging a message") {
-                logger.info("Hello, world!");
+                logger.log(Logger::LogLevel::INFO, "Hello, world!");
 
                 THEN("The message should be written to the stream") {
                     REQUIRE(stream.str() == "[INFO] Hello, world!\n");
@@ -22,7 +22,7 @@ SCENARIO("Logging messages to a stream sink") {
             }
 
             WHEN("Logging a message with a format") {
-                logger.info("Hello, {}!", "world");
+                logger.log(Logger::LogLevel::INFO, "Hello, {}!", "world");
 
                 THEN("The message should be written to the stream") {
                     REQUIRE(stream.str() == "[INFO] Hello, world!\n");
@@ -30,7 +30,7 @@ SCENARIO("Logging messages to a stream sink") {
             }
 
             WHEN("Logging a message with multiple arguments") {
-                logger.info("Hello, {}! The answer is {}", "world", 42);
+                logger.log(Logger::LogLevel::INFO, "Hello, {}! The answer is {}", "world", 42);
 
                 THEN("The message should be written to the stream") {
                     REQUIRE(stream.str() == "[INFO] Hello, world! The answer is 42\n");

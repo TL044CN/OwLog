@@ -39,6 +39,7 @@ set(${PROJECT_NAME}_SOURCES
     source/${PROJECT_NAME}.cpp
     source/Logger.cpp
     source/Profiler.cpp
+    source/StreamSink.cpp
 )
 
 if(${PROJECT_NAME}_BUILD_SHARED)
