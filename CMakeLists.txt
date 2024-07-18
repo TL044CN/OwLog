@@ -17,6 +17,9 @@ project(OwLog
     LANGUAGES CXX
 )
 
+if(CMAKE_CXX_COMPILER_ID MATCHES "clang")
+    target_compile_options(${PROJECT_NAME} PRIVATE -stdlib=libc++)
+endif()
 
 # set the build options
 option(${PROJECT_NAME}_BUILD_SHARED "Build Shared Library" OFF)
@@ -33,9 +36,9 @@ endif()
 include(CMakeFiles/PrintInfo.cmake)
 
 set(${PROJECT_NAME}_SOURCES
-  source/${PROJECT_NAME}.cpp
-  source/Logger.cpp
-  source/Profiler.cpp
+    source/${PROJECT_NAME}.cpp
+    source/Logger.cpp
+    source/Profiler.cpp
 )
 
 if(${PROJECT_NAME}_BUILD_SHARED)
