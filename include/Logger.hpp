@@ -15,6 +15,10 @@
 #include <memory>
 #include <format>
 
+#if __has_include(<stacktrace>) && __cpp_lib_stacktrace >= 202011L
+#include <stacktrace>
+#endif
+
 namespace OwLog {
 
 /**
@@ -42,6 +46,13 @@ private:
 
 public:
     explicit Logger(std::shared_ptr<Sink> sink);
+
+private:
+    /**
+     * @brief Get the stack trace
+     * @return std::string The stack trace
+     */
+    std::string stack_trace(uint8_t indent = 0) const;
 
 public:
 

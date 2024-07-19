@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.16)
-set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD 23)
 set(CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
 
 if(DEFINED PROJECT_NAME AND NOT "${PROJECT_NAME}" STREQUAL "")
     set(IS_SUBMODULE ON)
@@ -16,10 +17,6 @@ project(OwLog
     DESCRIPTION "Simple Logging and Profiling Library"
     LANGUAGES CXX
 )
-
-if(CMAKE_CXX_COMPILER_ID MATCHES "clang")
-    target_compile_options(${PROJECT_NAME} PRIVATE -stdlib=libc++)
-endif()
 
 # set the build options
 option(${PROJECT_NAME}_BUILD_SHARED "Build Shared Library" OFF)

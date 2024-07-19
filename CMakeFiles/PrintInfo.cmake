@@ -11,6 +11,7 @@ endfunction()
 message(STATUS "==========|${PROJECT_NAME}|=======>>")
 message(STATUS "Version:      ${PROJECT_VERSION}")
 message(STATUS "Git Tag:      ${GIT_TAG_VERSION}")
+message(STATUS "C++ Standard: ${CMAKE_CXX_STANDARD}")
 print_conditional_status(IS_SUBMODULE "Is Submodule: Yes" "Is Submodule: No")
 print_conditional_status(${PROJECT_NAME}_BUILD_SHARED
     "Library Type: Shared"
