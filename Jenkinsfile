@@ -43,12 +43,12 @@ pipeline {
         stage('Prepare Tools'){
             steps {
                 script {
-                    if(COMPILER == 'clang') {
+/*/                    if(COMPILER == 'clang') {
                         sh 'apt install -y llvm'
                     }
                     sh "apt install -y lcov doxygen"
                     sh "apt install -y python3-venv"
-                    sh """python3 -m venv venv
+*/                    sh """python3 -m venv venv
                         . venv/bin/activate
                         pip install lcov_cobertura
                     """

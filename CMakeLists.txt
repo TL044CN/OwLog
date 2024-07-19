@@ -45,6 +45,10 @@ else()
     add_library(${PROJECT_NAME} STATIC ${${PROJECT_NAME}_SOURCES})
 endif()
 
+if(CMAKE_CXX_COMPILER MATCHES "Clang")
+    target_compile_options(${PROJECT_NAME} PRIVATE -stdlib=libc++ -fexperimental-library)
+endif()
+
 target_include_directories(${PROJECT_NAME}
     PUBLIC
         $<INSTALL_INTERFACE:include>
@@ -76,7 +80,6 @@ install(EXPORT ${PROJECT_NAME}Targets
     NAMESPACE ${PROJECT_NAME}::
     DESTINATION lib/cmake/${PROJECT_NAME}
 )
-
 
 # build documentation
 if(${PROJECT_NAME}_BUILD_DOCS)
