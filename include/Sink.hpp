@@ -13,13 +13,25 @@
 
 #include <string_view>
 
+/**
+ * @defgroup Sinks
+ * @brief Sinks module
+ * @details This module contains all sink classes
+ */
+
 namespace OwLog {
 
 /**
- * @brief Sink class
+ * @ingroup Sinks
+ * @brief Sink base class
+ * @details Sink class is a base class for all sinks
  */
 class Sink {
 public:
+    /**
+     * @brief Write a message to the sink
+     * @param message Message to write
+     */
     virtual void write(std::string_view message) = 0;
 };
 

@@ -11,7 +11,7 @@
 
 #pragma once
 
-#include "Sink.hpp"
+#include "../Sink.hpp"
 #include <ostream>
 
 namespace OwLog {

@@ -36,7 +36,7 @@ set(${PROJECT_NAME}_SOURCES
     source/${PROJECT_NAME}.cpp
     source/Logger.cpp
     source/Profiler.cpp
-    source/StreamSink.cpp
+    source/Sinks/StreamSink.cpp
 )
 
 if(${PROJECT_NAME}_BUILD_SHARED)
@@ -44,6 +44,10 @@ if(${PROJECT_NAME}_BUILD_SHARED)
 else()
     add_library(${PROJECT_NAME} STATIC ${${PROJECT_NAME}_SOURCES})
 endif()
+
+include(CMakeFiles/Dependencies.cmake)
+
+target_link_libraries(${PROJECT_NAME} PUBLIC ${${PROJECT_NAME}_LIBRARIES})
 
 if(CMAKE_CXX_COMPILER MATCHES "Clang")
     target_compile_options(${PROJECT_NAME} PRIVATE -stdlib=libc++ -fexperimental-library)

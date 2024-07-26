@@ -1,4 +1,4 @@
-#include "StreamSink.hpp"
+#include "Sinks/StreamSink.hpp"
 
 namespace OwLog {
 
