@@ -1,6 +1,6 @@
 #include "catch2/catch_test_macros.hpp"
 
-#include "StreamSink.hpp"
+#include "Sinks/StreamSink.hpp"
 #include "Logger.hpp"
 
 using namespace OwLog;

@@ -13,7 +13,17 @@
 
 #include "Sink.hpp"
 #include <memory>
-#include <format>
+#if __has_include(<format>)
+    #include <format>
+    using std::format;
+    using std::vformat;
+    using std::make_format_args;
+#else
+    #include <fmt/core.h>
+    using fmt::format;
+    using fmt::vformat;
+    using fmt::make_format_args;
+#endif
 
 #if __has_include(<stacktrace>) && __cpp_lib_stacktrace >= 202011L
 #include <stacktrace>
@@ -95,7 +105,7 @@ public:
      */
     template <typename... Args>
     void log(LogLevel level, std::string_view format, const Args&... args) {
-        std::string message = std::vformat(std::forward<std::string_view>(format), std::make_format_args(args...));
+        std::string message = vformat(std::forward<std::string_view>(format), make_format_args(args...));
         log(level, message);
     }
 
@@ -119,6 +129,6 @@ public:
  * @param level The LogLevel to convert
  * @return std::string The string representation of the LogLevel
  */
-std::string to_string(Logger::LogLevel level);
+constexpr const char* to_string(Logger::LogLevel level);
 
 } // namespace OwLog

@@ -92,32 +92,25 @@ void Logger::log(LogLevel level, std::string_view message) {
     }
 
     if ( level == LogLevel::TRACE || level == LogLevel::FATAL ) {
-        mSink->write(std::format(
+        mSink->write(format(
             "[{}] {}\n"
             "====STACKTRACE===>\n"
             "{}"
             "<===STACKTRACE====\n",
             to_string(level), message, stack_trace(1)));
     } else
-        mSink->write(std::format("[{}] {}\n", to_string(level), message));
+        mSink->write(format("[{}] {}\n", to_string(level), message));
 }
 
-std::string to_string(Logger::LogLevel level) {
+constexpr const char* to_string(Logger::LogLevel level) {
     switch ( level ) {
-    case Logger::LogLevel::TRACE:
-        return "TRACE";
-    case Logger::LogLevel::DEBUG:
-        return "DEBUG";
-    case Logger::LogLevel::INFO:
-        return "INFO";
-    case Logger::LogLevel::WARN:
-        return "WARN";
-    case Logger::LogLevel::ERROR:
-        return "ERROR";
-    case Logger::LogLevel::FATAL:
-        return "FATAL";
-    default:
-        return "UNKNOWN";
+    case Logger::LogLevel::TRACE: return "TRACE";
+    case Logger::LogLevel::DEBUG: return "DEBUG";
+    case Logger::LogLevel::INFO:  return "INFO";
+    case Logger::LogLevel::WARN:  return "WARN";
+    case Logger::LogLevel::ERROR: return "ERROR";
+    case Logger::LogLevel::FATAL: return "FATAL";
+    default: return "UNKNOWN";
     }
 }
 
