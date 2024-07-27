@@ -33,6 +33,11 @@ public:
     explicit StreamSink(std::ostream& stream);
 
     /**
+     * @brief Destroy the StreamSink object
+     */
+    virtual ~StreamSink() override = default;
+
+    /**
      * @brief Flush the stream
      */
     void flush();

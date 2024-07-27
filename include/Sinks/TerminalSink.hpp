@@ -47,6 +47,15 @@ public:
          */
         Color()
             : red(0), green(0), blue(0) {};
+
+        /**
+         * @brief Compare two colors
+         * 
+         * @param other The other color
+         * @return true the colors match
+         * @return false the colors dont match
+         */
+        bool operator ==(const Color& other) const = default;
     };
 
 private:

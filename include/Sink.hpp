@@ -29,6 +29,11 @@ namespace OwLog {
 class Sink {
 public:
     /**
+     * @brief Destroy the Sink object
+     */
+    virtual ~Sink() = default;
+
+    /**
      * @brief Write a message to the sink
      * @param message Message to write
      */

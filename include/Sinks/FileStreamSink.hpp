@@ -22,19 +22,19 @@ namespace OwLog {
  */
 class FileStreamSink : public StreamSink {
 private:
-    std::ofstream mFileStream;
+    std::ofstream mFileStream;      ///< The file stream
 
 public:
     /**
      * @brief Construct a new FileStreamSink object
      * @param filename File name
      */
-    FileStreamSink(const std::string& filename);
+    explicit FileStreamSink(const std::string& filename);
 
     /**
      * @brief Destroy the FileStreamSink object
      */
-    ~FileStreamSink();
+    ~FileStreamSink() override;
 
     /**
      * @brief Check if the file is good

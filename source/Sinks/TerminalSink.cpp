@@ -44,14 +44,17 @@ void TerminalSink::resetColors() {
 
 void TerminalSink::setCursorPos(uint8_t x, uint8_t y) {
     std::cout << "\033[" << static_cast<int>(y) << ";" << static_cast<int>(x) << "H";
+    flush();
 }
 
 void TerminalSink::clearScreen() {
-    std::cout << "\033[2J";
+    std::cout << "\033[2J\033[1;1H";
+    flush();
 }
 
 void TerminalSink::clearLine() {
     std::cout << "\033[K";
+    flush();
 }
 
 void TerminalSink::write(std::string_view message) {
