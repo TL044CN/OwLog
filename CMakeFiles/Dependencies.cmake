@@ -31,7 +31,7 @@ endfunction()
 
 
 check_include_file_cxx("format" HAVE_FORMAT)
-if(NOT "${HAVE_FORMAT}" STREQUAL "")
+if("${HAVE_FORMAT}" STREQUAL "")
     addExternalDependency(
         NAME fmt
         URL https://github.com/fmtlib/fmt
@@ -39,3 +39,27 @@ if(NOT "${HAVE_FORMAT}" STREQUAL "")
         MODULES fmt::fmt
     )
 endif()
+
+addExternalDependency(
+    NAME SocketSparrow
+    URL https://github.com/TL044CN/SocketSparrow
+    TAG 1.0.2
+)
+
+addExternalDependency(
+    NAME DoveDispatch
+    URL https://github.com/TL044CN/DoveDispatch
+    TAG v1.0.5
+)
+
+addExternalDependency(
+    NAME FlockFlow
+    URL https://github.com/TL044CN/FlockFlow
+    TAG v1.0.3
+)
+
+addExternalDependency(
+    NAME JSONJay
+    URL https://github.com/TL044CN/JSON-Jay
+    TAG v0.0.4
+)

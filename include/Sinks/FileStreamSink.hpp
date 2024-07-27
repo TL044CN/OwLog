@@ -21,6 +21,9 @@ namespace OwLog {
  * @details FileStreamSink class is a class that writes log messages to a file
  */
 class FileStreamSink : public StreamSink {
+private:
+    std::ofstream mFileStream;
+
 public:
     /**
      * @brief Construct a new FileStreamSink object

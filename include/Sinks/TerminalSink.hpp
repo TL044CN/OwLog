@@ -12,6 +12,7 @@
 #pragma once
 
 #include "StreamSink.hpp"
+#include <cstdint>
 
 namespace OwLog {
 
@@ -38,22 +39,22 @@ public:
          * @param green The green color value
          * @param blue The blue color value
          */
-        constexpr Color(uint8_t red, uint8_t green, uint8_t blue)
+        Color(uint8_t red, uint8_t green, uint8_t blue)
             : red(red), green(green), blue(blue) {}
 
         /**
          * @brief Construct a new Color object
          */
-        constexpr Color()
+        Color()
             : red(0), green(0), blue(0) {};
     };
 
 private:
-    static constexpr Color ceDefaultTextColor = {255, 255, 255};
-    static constexpr Color ceDefaultBackgroundColor = {0, 0, 0};
+    static const Color cDefaultTextColor;
+    static const Color cDefaultBackgroundColor;
 
-    Color mTextColor = ceDefaultTextColor;
-    Color mBackgroundColor = ceDecailtBackgroundColor;
+    Color mTextColor = cDefaultTextColor;
+    Color mBackgroundColor = cDefaultBackgroundColor;
 
     bool mUseColor = true;
 
@@ -63,12 +64,7 @@ public:
      * @param textColor The text color
      * @param backgroundColor The background color
      */
-    TerminalSink(Color textColor = ceDefaultTextColor, Color backgroundColor = ceDefaultBackgroundColor);
-
-    /**
-     * @brief Destroy the Terminal Sink object
-     */
-    ~TerminalSink() override;
+    TerminalSink(const Color& textColor = cDefaultTextColor, const Color& backgroundColor = cDefaultBackgroundColor);
 
     /**
      * @brief Get weather color is used
