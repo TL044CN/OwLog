@@ -31,20 +31,11 @@ endfunction()
 
 
 check_include_file_cxx("format" HAVE_FORMAT)
-if("${HAVE_FORMAT}" STREQUAL "")
+if(NOT "${HAVE_FORMAT}" STREQUAL "")
     addExternalDependency(
         NAME fmt
         URL https://github.com/fmtlib/fmt
         TAG 11.0.2
         MODULES fmt::fmt
     )
-endif()
-
-if(NOT ${PROJECT_NAME}_LIBRARIES STREQUAL "")
-    message(STATUS "==========|${PROJECT_NAME}|=======>>")
-    message(STATUS "External Libraries:")
-    foreach(lib IN LISTS ${PROJECT_NAME}_LIBRARIES)
-        message(STATUS "  - ${lib}")
-    endforeach()
-    message(STATUS "<<========|${PROJECT_NAME}|=========")
 endif()
