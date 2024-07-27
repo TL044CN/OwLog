@@ -1,13 +1,14 @@
 include(FetchContent)
-include(CMakeParseArguments)
+include(CheckIncludeFileCXX)
 
 set(${PROJECT_NAME}_LIBRARIES "" CACHE INTERNAL "")
 
 function(addExternalDependency)
+    set(options "")
     set(oneValueArgs NAME TAG URL)
     set(multiValueArgs MODULES)
 
-    cmake_parse_arguments(PREFIX "" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
+    cmake_parse_arguments(PREFIX "${options}" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
 
     FetchContent_Declare(
         ${PREFIX_NAME}
@@ -28,11 +29,22 @@ function(addExternalDependency)
     set(${PROJECT_NAME}_LIBRARIES "${${PROJECT_NAME}_LIBRARIES}" CACHE INTERNAL "")
 endfunction()
 
-addExternalDependency(
-    NAME fmt
-    URL https://github.com/fmtlib/fmt
-    TAG 11.0.2
-    MODULES fmt::fmt
-)
 
-message(STATUS "External Libraries: ${${PROJECT_NAME}_LIBRARIES}")
+check_include_file_cxx("format" HAVE_FORMAT)
+if("${HAVE_FORMAT}" STREQUAL "")
+    addExternalDependency(
+        NAME fmt
+        URL https://github.com/fmtlib/fmt
+        TAG 11.0.2
+        MODULES fmt::fmt
+    )
+endif()
+
+if(NOT ${PROJECT_NAME}_LIBRARIES STREQUAL "")
+    message(STATUS "==========|${PROJECT_NAME}|=======>>")
+    message(STATUS "External Libraries:")
+    foreach(lib IN LISTS ${PROJECT_NAME}_LIBRARIES)
+        message(STATUS "  - ${lib}")
+    endforeach()
+    message(STATUS "<<========|${PROJECT_NAME}|=========")
+endif()
