@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.16)
-set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD 23)
 set(CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
 
 if(DEFINED PROJECT_NAME AND NOT "${PROJECT_NAME}" STREQUAL "")
     set(IS_SUBMODULE ON)
@@ -17,7 +18,6 @@ project(OwLog
     LANGUAGES CXX
 )
 
-
 # set the build options
 option(${PROJECT_NAME}_BUILD_SHARED "Build Shared Library" OFF)
 option(${PROJECT_NAME}_BUILD_TESTS "Build Tests" ON)
@@ -33,15 +33,24 @@ endif()
 include(CMakeFiles/PrintInfo.cmake)
 
 set(${PROJECT_NAME}_SOURCES
-  source/${PROJECT_NAME}.cpp
-  source/Logger.cpp
-  source/Profiler.cpp
+    source/${PROJECT_NAME}.cpp
+    source/Logger.cpp
+    source/Profiler.cpp
+    source/Sinks/StreamSink.cpp
 )
 
 if(${PROJECT_NAME}_BUILD_SHARED)
     add_library(${PROJECT_NAME} SHARED ${${PROJECT_NAME}_SOURCES})
 else()
     add_library(${PROJECT_NAME} STATIC ${${PROJECT_NAME}_SOURCES})
+endif()
+
+include(CMakeFiles/Dependencies.cmake)
+
+target_link_libraries(${PROJECT_NAME} PUBLIC ${${PROJECT_NAME}_LIBRARIES})
+
+if(CMAKE_CXX_COMPILER MATCHES "Clang")
+    target_compile_options(${PROJECT_NAME} PRIVATE -stdlib=libc++ -fexperimental-library)
 endif()
 
 target_include_directories(${PROJECT_NAME}
@@ -75,7 +84,6 @@ install(EXPORT ${PROJECT_NAME}Targets
     NAMESPACE ${PROJECT_NAME}::
     DESTINATION lib/cmake/${PROJECT_NAME}
 )
-
 
 # build documentation
 if(${PROJECT_NAME}_BUILD_DOCS)
