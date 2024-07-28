@@ -56,6 +56,7 @@ public:
          * @return false the colors dont match
          */
         bool operator ==(const Color& other) const = default;
+
     };
 
 private:

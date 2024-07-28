@@ -18,7 +18,7 @@ template<typename... Args>
 using MockFunc = MockingController::MockingFunction<Args...>;
 
 
-SCENARIO("Logging messages to a file stream sink") {
+SCENARIO("Logging messages to sinks", "[Sinks]") {
     GIVEN("A FileStreamSink") {
         auto sink = std::make_shared<FileStreamSink>("test.log");
 
@@ -86,7 +86,7 @@ SCENARIO("Logging messages to a file stream sink") {
 
             AND_GIVEN("The colors were set") {
                 sink->setTextColor({255, 0, 0});
-                sink->setBackgroundColor({0, 255, 0});
+                sink->setBackgroundColor(TerminalSink::Color());
 
                 WHEN("Resetting the colors") {
                     sink->resetColors();
@@ -95,7 +95,9 @@ SCENARIO("Logging messages to a file stream sink") {
                         REQUIRE(sink->mTextColor == TerminalSink::cDefaultTextColor);
                         REQUIRE(sink->mBackgroundColor == TerminalSink::cDefaultBackgroundColor);
                         AND_THEN("The colors should be written to the stream") {
-                            REQUIRE(stream.str() == "\033[38;2;255;0;0m\033[48;2;0;255;0m");
+                            sink->write("Hello, world!");
+                            sink->flush();
+                            REQUIRE(stream.str() == "\033[38;2;255;255;255m\033[48;2;0;0;0mHello, world!\033[0m");
                         }
                     }
 
