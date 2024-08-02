@@ -99,5 +99,30 @@ SCENARIO("Logging messages to a stream sink") {
                 REQUIRE(currentContent.find("====STACKTRACE===>") != std::string::npos);
             }
         }
+
+        WHEN("Logging a message at the Debug level"){
+            logger.set_filter_level(Logger::LogLevel::DEBUG);
+            logger.log(Logger::LogLevel::DEBUG, "This message should be at the DEBUG level");
+
+            THEN("The message should be written to the stream") {
+                REQUIRE(stream.str() == "[DEBUG] This message should be at the DEBUG level\n");
+            }
+        }
+
+        WHEN("Logging a message at the ERROR level"){
+            logger.log(Logger::LogLevel::ERROR, "This message should be at the ERROR level");
+
+            THEN("The message should be written to the stream") {
+                REQUIRE(stream.str() == "[ERROR] This message should be at the ERROR level\n");
+            }
+        }
+
+        WHEN("Logging a message at an unknown level"){
+            logger.log(static_cast<Logger::LogLevel>(6), "This message should be at an unknown level");
+
+            THEN("The message should be written to the stream") {
+                REQUIRE(stream.str() == "[UNKNOWN] This message should be at an unknown level\n");
+            }
+        }
     }}
 }
