@@ -67,7 +67,7 @@ pipeline {
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh """
-                    cmake --build build/ --config=${BUILD_TYPE} -j --target coverage
+                    cmake --build build/ --config=${BUILD_TYPE} --target coverage
 
                     . venv/bin/activate
                     # Convert lcov report to cobertura format
