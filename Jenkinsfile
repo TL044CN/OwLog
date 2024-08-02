@@ -1,14 +1,13 @@
 
 pipeline {
-    options([
-        parameters {
-            string(name: 'PLATFORM', defaultValue: 'linux', description: 'Platform to build on')
-            string(name: 'COMPILER', defaultValue: 'clang', description: 'Compiler to use')
-            string(name: 'BUILD_TYPE', defaultValue: 'Release', description: 'Build type')
-        }
-    ])
     agent{
         label "linux&&clang"
+    }
+
+    parameters {
+        string(name: 'PLATFORM', defaultValue: 'linux', description: 'Platform to build on')
+        string(name: 'COMPILER', defaultValue: 'clang', description: 'Compiler to use')
+        string(name: 'BUILD_TYPE', defaultValue: 'Release', description: 'Build type')
     }
 
     environment {
@@ -19,11 +18,6 @@ pipeline {
         stage('Retrieving Artifacts') {
             steps {
                 script{
-                    try {
-                        unstash 'vendor'
-                    } catch(Exception e) {
-
-                    }
                     try {
                         unarchive (mapping: [
                             "build-${params.PLATFORM}-${params.COMPILER}/": "build"
@@ -69,7 +63,7 @@ pipeline {
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh """
-                    cmake --build build/ --config=${params.BUILD_TYPE} -j --target coverage
+                    cmake --build build/ --config=${params.BUILD_TYPE} --target coverage
 
                     . venv/bin/activate
                     # Convert lcov report to cobertura format
