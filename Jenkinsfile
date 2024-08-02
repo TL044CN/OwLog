@@ -15,6 +15,7 @@ pipeline {
     }
 
     stages {
+        /*
         stage('Retrieving Artifacts') {
             steps {
                 script{
@@ -29,6 +30,7 @@ pipeline {
                 }
             }
         }
+        */
         stage('initialize submodules') {
             steps {
                 script {
@@ -115,11 +117,14 @@ pipeline {
                 }
             }
         }
+        /*
         stage('Archiving Artifacts') {
             steps {
-                sh 'mv build "build-${PLATFORM}-${COMPILER}"'
+                sh 'mv build "build-${params.PLATFORM}-${params.COMPILER}"'
+
                 archiveArtifacts (artifacts: "build-${params.PLATFORM}-${params.COMPILER}/", allowEmptyArchive: true, onlyIfSuccessful: true, fingerprint: true)
             }
         }
+        */
     }
 }
