@@ -1,10 +1,12 @@
 
 pipeline {
-    parameters {
-        string(name: 'PLATFORM', defaultValue: 'linux', description: 'Platform to build on')
-        string(name: 'COMPILER', defaultValue: 'clang', description: 'Compiler to use')
-        string(name: 'BUILD_TYPE', defaultValue: 'Release', description: 'Build type')
-    }
+    properties([
+        parameters {
+            string(name: 'PLATFORM', defaultValue: 'linux', description: 'Platform to build on')
+            string(name: 'COMPILER', defaultValue: 'clang', description: 'Compiler to use')
+            string(name: 'BUILD_TYPE', defaultValue: 'Release', description: 'Build type')
+        }
+    ])
     agent{
         label "linux&&clang"
     }
