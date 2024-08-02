@@ -40,6 +40,7 @@ set(${PROJECT_NAME}_SOURCES
     source/Sinks/StreamSink.cpp
     source/Sinks/FileStreamSink.cpp
     source/Sinks/TerminalSink.cpp
+    source/Sinks/SocketSink.cpp
 )
 
 if(${PROJECT_NAME}_BUILD_SHARED)
