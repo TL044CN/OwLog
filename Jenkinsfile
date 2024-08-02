@@ -1,12 +1,13 @@
 
 pipeline {
+    agent{
+        label "linux&&clang"
+    }
+
     parameters {
         string(name: 'PLATFORM', defaultValue: 'linux', description: 'Platform to build on')
         string(name: 'COMPILER', defaultValue: 'clang', description: 'Compiler to use')
         string(name: 'BUILD_TYPE', defaultValue: 'Release', description: 'Build type')
-    }
-    agent{
-        label "linux&&clang"
     }
 
     environment {
@@ -18,13 +19,8 @@ pipeline {
             steps {
                 script{
                     try {
-                        unstash 'vendor'
-                    } catch(Exception e) {
-
-                    }
-                    try {
                         unarchive (mapping: [
-                            "build-${PLATFORM}-${COMPILER}/": "build"
+                            "build-${params.PLATFORM}-${params.COMPILER}/": "build"
                         ])
                         artifactsRetrieved = true
                     } catch (Exception e) {
@@ -58,8 +54,8 @@ pipeline {
         stage('Build') {
             steps {
                 sh """
-                cmake -B build/ -DCMAKE_BUILD_TYPE=${BUILD_TYPE} -DOwLog_BUILD_DOCS=OFF
-                cmake --build build/ --config=${BUILD_TYPE} -j
+                cmake -B build/ -DCMAKE_BUILD_TYPE=${params.BUILD_TYPE} -DOwLog_BUILD_DOCS=OFF
+                cmake --build build/ --config=${params.BUILD_TYPE} -j
                 """
             }
         }
@@ -67,7 +63,7 @@ pipeline {
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     sh """
-                    cmake --build build/ --config=${BUILD_TYPE} -j --target coverage
+                    cmake --build build/ --config=${params.BUILD_TYPE} --target coverage
 
                     . venv/bin/activate
                     # Convert lcov report to cobertura format
@@ -122,7 +118,7 @@ pipeline {
         stage('Archiving Artifacts') {
             steps {
                 sh 'mv build "build-${PLATFORM}-${COMPILER}"'
-                archiveArtifacts (artifacts: "build-${PLATFORM}-${COMPILER}/", allowEmptyArchive: true, onlyIfSuccessful: true, fingerprint: true)
+                archiveArtifacts (artifacts: "build-${params.PLATFORM}-${params.COMPILER}/", allowEmptyArchive: true, onlyIfSuccessful: true, fingerprint: true)
             }
         }
     }
