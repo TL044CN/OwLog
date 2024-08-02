@@ -30,6 +30,7 @@ if(IS_SUBMODULE)
 endif()
 
 #print info about the build options
+include(CMakeFiles/Dependencies.cmake)
 include(CMakeFiles/PrintInfo.cmake)
 
 set(${PROJECT_NAME}_SOURCES
@@ -37,6 +38,8 @@ set(${PROJECT_NAME}_SOURCES
     source/Logger.cpp
     source/Profiler.cpp
     source/Sinks/StreamSink.cpp
+    source/Sinks/FileStreamSink.cpp
+    source/Sinks/TerminalSink.cpp
 )
 
 if(${PROJECT_NAME}_BUILD_SHARED)
@@ -45,7 +48,6 @@ else()
     add_library(${PROJECT_NAME} STATIC ${${PROJECT_NAME}_SOURCES})
 endif()
 
-include(CMakeFiles/Dependencies.cmake)
 
 target_link_libraries(${PROJECT_NAME} PUBLIC ${${PROJECT_NAME}_LIBRARIES})
 

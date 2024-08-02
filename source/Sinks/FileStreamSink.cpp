@@ -14,15 +14,14 @@
 namespace OwLog {
 
 FileStreamSink::FileStreamSink(const std::string& filename)
-    : StreamSink(mFile)
-    , mFile(filename) {}
+: StreamSink(mFileStream), mFileStream(filename, std::ios::out) {}
 
 FileStreamSink::~FileStreamSink() {
-    mFile.close();
+    mFileStream.close();
 }
 
 bool FileStreamSink::good() const {
-    return mFile.good();
+    return mFileStream.good();
 }
 
 } // namespace OwLog

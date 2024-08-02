@@ -40,11 +40,26 @@ if("${HAVE_FORMAT}" STREQUAL "")
     )
 endif()
 
-if(NOT ${PROJECT_NAME}_LIBRARIES STREQUAL "")
-    message(STATUS "==========|${PROJECT_NAME}|=======>>")
-    message(STATUS "External Libraries:")
-    foreach(lib IN LISTS ${PROJECT_NAME}_LIBRARIES)
-        message(STATUS "  - ${lib}")
-    endforeach()
-    message(STATUS "<<========|${PROJECT_NAME}|=========")
-endif()
+addExternalDependency(
+    NAME SocketSparrow
+    URL https://github.com/TL044CN/SocketSparrow
+    TAG 1.0.2
+)
+
+addExternalDependency(
+    NAME DoveDispatch
+    URL https://github.com/TL044CN/DoveDispatch
+    TAG v1.0.5
+)
+
+addExternalDependency(
+    NAME FlockFlow
+    URL https://github.com/TL044CN/FlockFlow
+    TAG v1.0.3
+)
+
+addExternalDependency(
+    NAME JSONJay
+    URL https://github.com/TL044CN/JSON-Jay
+    TAG v0.0.4
+)

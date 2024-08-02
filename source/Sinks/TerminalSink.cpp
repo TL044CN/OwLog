@@ -14,10 +14,10 @@
 
 namespace OwLog {
 
-TerminalSink::TerminalSink()
-    : StreamSink(std::cout) {}
+TerminalSink::Color const TerminalSink::cDefaultTextColor = TerminalSink::Color(255, 255, 255);
+TerminalSink::Color const TerminalSink::cDefaultBackgroundColor = TerminalSink::Color(0, 0, 0);
 
-TerminalSink::TerminalSink(Color textColor, Color backgroundColor)
+TerminalSink::TerminalSink(const Color& textColor, const Color& backgroundColor)
     : StreamSink(std::cout), mTextColor(textColor), mBackgroundColor(backgroundColor) {}
 
 
@@ -37,20 +37,24 @@ void TerminalSink::setBackgroundColor(Color color) {
     mBackgroundColor = color;
 }
 
-void TerminalSink::resetColor() {
-    mTextColor = ceDefaultTextColor;
+void TerminalSink::resetColors() {
+    mTextColor = cDefaultTextColor;
+    mBackgroundColor = cDefaultBackgroundColor;
 }
 
 void TerminalSink::setCursorPos(uint8_t x, uint8_t y) {
     std::cout << "\033[" << static_cast<int>(y) << ";" << static_cast<int>(x) << "H";
+    flush();
 }
 
 void TerminalSink::clearScreen() {
-    std::cout << "\033[2J";
+    std::cout << "\033[2J\033[1;1H";
+    flush();
 }
 
 void TerminalSink::clearLine() {
     std::cout << "\033[K";
+    flush();
 }
 
 void TerminalSink::write(std::string_view message) {
