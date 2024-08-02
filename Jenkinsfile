@@ -1,6 +1,6 @@
 
 pipeline {
-    properties([
+    options([
         parameters {
             string(name: 'PLATFORM', defaultValue: 'linux', description: 'Platform to build on')
             string(name: 'COMPILER', defaultValue: 'clang', description: 'Compiler to use')
