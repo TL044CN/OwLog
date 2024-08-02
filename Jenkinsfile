@@ -121,7 +121,6 @@ pipeline {
         stage('Archiving Artifacts') {
             steps {
                 sh 'mv build "build-${params.PLATFORM}-${params.COMPILER}"'
-
                 archiveArtifacts (artifacts: "build-${params.PLATFORM}-${params.COMPILER}/", allowEmptyArchive: true, onlyIfSuccessful: true, fingerprint: true)
             }
         }
