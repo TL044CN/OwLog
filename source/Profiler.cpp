@@ -196,4 +196,8 @@ void Profiler::writeProfileData(Sink& sink) {
     }
 };
 
+const std::map<std::string, std::vector<Profiler::ProfileData>>& Profiler::getProfileData() const {
+    return mProfileData;
+}
+
 } // namespace OwLog

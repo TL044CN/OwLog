@@ -135,6 +135,14 @@ public:
      * @param sink Sink to write data to
      */
     void writeProfileData(Sink& sink);
+
+    /**
+     * @brief Get the profile data
+     * @details Get the profile data
+     * 
+     * @return const std::map<std::string, std::vector<ProfileData>>& Profile data
+     */
+    const std::map<std::string, std::vector<ProfileData>>& getProfileData() const;
 };
 
 } // namespace OwLog
