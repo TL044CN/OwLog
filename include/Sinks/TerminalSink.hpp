@@ -12,6 +12,7 @@
 #pragma once
 
 #include "StreamSink.hpp"
+#include "ColorSink.hpp"
 #include <cstdint>
 
 namespace OwLog {
@@ -21,51 +22,8 @@ namespace OwLog {
  * @brief TerminalSink class
  * @details A sink that writes log messages to the terminal
  */
-class TerminalSink : public StreamSink {
-public:
-
-    /**
-     * @brief Color struct
-     * @details A struct that holds color values
-     */
-    struct Color {
-        uint8_t red;      ///< Red color value
-        uint8_t green;    ///< Green color value
-        uint8_t blue;     ///< Blue color value
-
-        /**
-         * @brief Construct a new Color object
-         * @param red The red color value
-         * @param green The green color value
-         * @param blue The blue color value
-         */
-        Color(uint8_t red, uint8_t green, uint8_t blue)
-            : red(red), green(green), blue(blue) {}
-
-        /**
-         * @brief Construct a new Color object
-         */
-        Color()
-            : red(0), green(0), blue(0) {};
-
-        /**
-         * @brief Compare two colors
-         * 
-         * @param other The other color
-         * @return true the colors match
-         * @return false the colors dont match
-         */
-        bool operator ==(const Color& other) const = default;
-
-    };
-
+class TerminalSink : public StreamSink, public ColorSink {
 private:
-    static const Color cDefaultTextColor;
-    static const Color cDefaultBackgroundColor;
-
-    Color mTextColor = cDefaultTextColor;
-    Color mBackgroundColor = cDefaultBackgroundColor;
-
     bool mUseColor = true;
 
 public:
@@ -89,23 +47,6 @@ public:
     void useColor(bool useColor);
 
     /**
-     * @brief Set the text color
-     * @param color The color
-     */
-    void setTextColor(Color color);
-
-    /**
-     * @brief Set the background color
-     * @param color The color
-     */
-    void setBackgroundColor(Color color);
-
-    /**
-     * @brief Reset the colors to the default
-     */
-    void resetColors();
-
-    /**
      * @brief Set the cursor position
      * @param x The x position
      * @param y The y position
@@ -121,7 +62,6 @@ public:
      * @brief Clear the current line
      */
     virtual void clearLine();
-
 
     void write(std::string_view message) override;
 };

@@ -14,11 +14,8 @@
 
 namespace OwLog {
 
-TerminalSink::Color const TerminalSink::cDefaultTextColor = TerminalSink::Color(255, 255, 255);
-TerminalSink::Color const TerminalSink::cDefaultBackgroundColor = TerminalSink::Color(0, 0, 0);
-
 TerminalSink::TerminalSink(const Color& textColor, const Color& backgroundColor)
-    : StreamSink(std::cout), mTextColor(textColor), mBackgroundColor(backgroundColor) {}
+    : StreamSink(std::cout), ColorSink(textColor, backgroundColor) {}
 
 
 bool TerminalSink::useColor() const {
@@ -27,19 +24,6 @@ bool TerminalSink::useColor() const {
 
 void TerminalSink::useColor(bool useColor) {
     mUseColor = useColor;
-}
-
-void TerminalSink::setTextColor(Color color) {
-    mTextColor = color;
-}
-
-void TerminalSink::setBackgroundColor(Color color) {
-    mBackgroundColor = color;
-}
-
-void TerminalSink::resetColors() {
-    mTextColor = cDefaultTextColor;
-    mBackgroundColor = cDefaultBackgroundColor;
 }
 
 void TerminalSink::setCursorPos(uint8_t x, uint8_t y) {
