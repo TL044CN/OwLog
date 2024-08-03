@@ -43,7 +43,7 @@ endif()
 addExternalDependency(
     NAME SocketSparrow
     URL https://github.com/TL044CN/SocketSparrow
-    TAG v1.0.3
+    TAG experimental
 )
 
 addExternalDependency(

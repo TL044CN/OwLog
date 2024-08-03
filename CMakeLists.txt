@@ -13,7 +13,7 @@ endif()
 include(CMakeFiles/HandleGit.cmake)
 
 project(OwLog
-    VERSION ${SANITIZED_VERSION}
+    VERSION ${PROJECT_REVISION}
     DESCRIPTION "Simple Logging and Profiling Library"
     LANGUAGES CXX
 )
