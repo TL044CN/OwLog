@@ -9,6 +9,11 @@
  *
  */
 
+/**
+ * @defgroup Profiler
+ * @brief Profiler related classes and functions for collecting data on function execution
+ */
+
 #include "Profiler.hpp"
 #include "ProfileScope.hpp"
 
@@ -38,7 +43,7 @@ void Profiler::writeToSink(Sink& sink) {
             auto memoryUsageDiff = profileData.endMemoryUsage - profileData.startMemoryUsage;
             auto cpuUsageDiff = profileData.endCPUUsage - profileData.startCPUUsage;
             
-            sink.write(std::format(
+            sink.write(format(
                 "<ProfileData label=\"{}\" timestamp=\"{}\" duration=\"{}ns\" threadID=\"{}\">"
                 "<MemoryUsage start=\"{}\" end=\"{}\" diff=\"{}\"/>"
                 "<CPUUsage start=\"{}\" end=\"{}\" diff=\"{}\"/>"
@@ -59,10 +64,24 @@ void Profiler::writeToSink(Sink& sink) {
     }
 };
 
+/**
+ * @brief get the percentile of the value between min and max
+ * 
+ * @param min the minimum value
+ * @param max the maximum value
+ * @param val the value to get the percentile of
+ * @return double the percentile of the value between min and max
+ */
 double percentile(const double min, const double max, const double val) {
     return (val - min) / (max - min);
 }
 
+/**
+ * @brief get the color for the score
+ * 
+ * @param score the score to get the color of (between 0 and 1)
+ * @return ColorSink::Color the color of the score
+ */
 ColorSink::Color getScoreColor(double score) {
     std::clamp(score, 0.0, 1.0);
     uint8_t red = 255 * score;
@@ -105,7 +124,7 @@ void Profiler::writeToColorSink(ColorSink& sink) {
         for ( const auto& profileData : data ) {
             auto previousBackground = sink.getBackgroundColor();
 
-            sink.write(std::format(
+            sink.write(format(
                 "<ProfileData label=\"{}\" timestamp=\"{}\" duration=\"",
                 profileData.name,
                 profileData.start.time_since_epoch().count()
@@ -118,7 +137,7 @@ void Profiler::writeToColorSink(ColorSink& sink) {
 
             auto threadId = std::hash<std::thread::id>{}(profileData.threadID);
             auto threadIdStr = std::to_string(threadId);
-            sink.write(std::format(
+            sink.write(format(
                 "\" threadID=\"{}\">"
                 "<MemoryUsage start=\"{}\" end=\"{}\" diff=\"",
                 threadIdStr,
@@ -130,7 +149,7 @@ void Profiler::writeToColorSink(ColorSink& sink) {
             sink.write(std::to_string(memoryUsageDiff));
             sink.setBackgroundColor(previousBackground);
 
-            sink.write(std::format(
+            sink.write(format(
                 "\"/>"
                 "<CPUUsage start=\"{}\" end=\"{}\" diff=\"",
                 profileData.startCPUUsage,
