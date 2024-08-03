@@ -13,7 +13,7 @@ endif()
 include(CMakeFiles/HandleGit.cmake)
 
 project(OwLog
-    VERSION ${SANITIZED_VERSION}
+    VERSION ${PROJECT_REVISION}
     DESCRIPTION "Simple Logging and Profiling Library"
     LANGUAGES CXX
 )
@@ -37,8 +37,10 @@ set(${PROJECT_NAME}_SOURCES
     source/${PROJECT_NAME}.cpp
     source/Logger.cpp
     source/Profiler.cpp
+    source/ProfileScope.cpp
     source/Sinks/StreamSink.cpp
     source/Sinks/FileStreamSink.cpp
+    source/Sinks/ColorSink.cpp
     source/Sinks/TerminalSink.cpp
 )
 

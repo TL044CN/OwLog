@@ -3,8 +3,11 @@
 #include "MockingBird.hpp"
 
 #define private public
+#define protected public
+#include "Sinks/ColorSink.hpp"
 #include "Sinks/FileStreamSink.hpp"
 #include "Sinks/TerminalSink.hpp"
+#undef protected
 #undef private
 
 #include <sstream>
@@ -86,14 +89,14 @@ SCENARIO("Logging messages to sinks", "[Sinks]") {
 
             AND_GIVEN("The colors were set") {
                 sink->setTextColor({255, 0, 0});
-                sink->setBackgroundColor(TerminalSink::Color());
+                sink->setBackgroundColor(ColorSink::Color());
 
                 WHEN("Resetting the colors") {
                     sink->resetColors();
 
                     THEN("The colors should be reset to the default colors") {
-                        REQUIRE(sink->mTextColor == TerminalSink::cDefaultTextColor);
-                        REQUIRE(sink->mBackgroundColor == TerminalSink::cDefaultBackgroundColor);
+                        REQUIRE(sink->mTextColor == ColorSink::cDefaultTextColor);
+                        REQUIRE(sink->mBackgroundColor == ColorSink::cDefaultBackgroundColor);
                         AND_THEN("The colors should be written to the stream") {
                             sink->write("Hello, world!");
                             sink->flush();
